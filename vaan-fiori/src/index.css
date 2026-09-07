@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-linen text-clay font-body antialiased;
+  }
+  ::selection {
+    @apply bg-rose-100 text-clay;
+  }
+  :focus-visible {
+    outline: 2px solid #B96F60;
+    outline-offset: 2px;
+  }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(24px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeIn {
+  from { transform: translateY(6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@layer components {
+  .card {
+    @apply bg-porcelain border border-sand rounded-xl2 shadow-soft;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-clay text-linen font-body font-semibold text-sm px-5 py-2.5 rounded-full transition-colors hover:bg-rose-700 active:bg-rose-700 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-transparent border border-clay/20 text-clay font-body font-semibold text-sm px-5 py-2.5 rounded-full transition-colors hover:border-clay/50 hover:bg-clay/5;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 text-bark font-body font-medium text-sm px-3 py-2 rounded-full transition-colors hover:bg-clay/5;
+  }
+  .input-field {
+    @apply w-full bg-porcelain border border-sand rounded-xl px-4 py-2.5 text-sm text-clay placeholder:text-bark/40 focus:border-rose-400 focus:ring-1 focus:ring-rose-400 outline-none transition-colors;
+  }
+  .label-field {
+    @apply block text-sm font-medium text-bark/80 mb-1.5;
+  }
+}
