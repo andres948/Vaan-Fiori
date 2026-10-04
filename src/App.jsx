@@ -127,6 +127,20 @@ body { font-family: 'DM Sans', sans-serif; background: #FFF6F9; color: #3D2A33; 
 .finput::placeholder { color:var(--gray-mid); }
 textarea.finput { resize:vertical; min-height:80px; }
 .finput-ro { background:var(--rose-50); }
+/* LOGIN */
+.login-page { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#FFF0F5 0%,#FBF5EC 100%); padding:2rem; }
+.login-card { background:var(--white); border-radius:28px; padding:48px 40px; width:100%; max-width:420px; border:1px solid var(--rose-100); box-shadow:0 20px 60px rgba(254,127,156,0.12); text-align:center; }
+.login-logo { width:72px; height:72px; background:linear-gradient(135deg,var(--rose-200),var(--rose-400)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 20px; }
+.login-brand { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:600; color:var(--rose-900); margin-bottom:4px; }
+.login-sub { font-size:12px; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:32px; }
+.login-group { margin-bottom:16px; text-align:left; }
+.login-label { font-size:12px; font-weight:500; color:var(--text-muted); margin-bottom:6px; display:block; }
+.login-input { width:100%; padding:12px 16px; border:1.5px solid var(--rose-100); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--rose-900); outline:none; transition:border-color 0.2s,box-shadow 0.2s; background:var(--white); }
+.login-input:focus { border-color:var(--rose-400); box-shadow:0 0 0 3px rgba(254,127,156,0.12); }
+.login-btn { width:100%; padding:14px; border-radius:24px; background:linear-gradient(135deg,var(--rose-400),var(--rose-600)); color:white; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; border:none; cursor:pointer; margin-top:8px; transition:all 0.2s; box-shadow:0 4px 16px rgba(254,127,156,0.35); }
+.login-btn:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(254,127,156,0.45); }
+.login-error { background:#FFEAEA; color:#C0392B; border-radius:10px; padding:10px 14px; font-size:13px; margin-bottom:14px; }
+.login-hint { font-size:11px; color:var(--gray-mid); margin-top:20px; }
 /* RADIO */
 .radio-grp { display:flex; flex-wrap:wrap; gap:7px; }
 .radio-opt { display:flex; align-items:center; gap:5px; padding:7px 13px; border:1.5px solid var(--rose-100); border-radius:20px; cursor:pointer; font-size:13px; color:var(--text-muted); transition:all 0.2s; user-select:none; }
@@ -440,6 +454,31 @@ function GastoForm({ form, onChange, onRadio }) {
 
 // ── APP PRINCIPAL ──
 export default function App() {
+  // ── Login ──
+  const [loggedIn, setLoggedIn] = useState(() => {
+    try { return localStorage.getItem("floreria_session") === "true"; } catch { return false; }
+  });
+  const [loginUser, setLoginUser] = useState("");
+  const [loginPass, setLoginPass] = useState("");
+  const [loginError, setLoginError] = useState("");
+
+  const doLogin = () => {
+    if (loginUser === "andresachinte0406@gmail.com" && loginPass === "andres8103") {
+      localStorage.setItem("floreria_session", "true");
+      setLoggedIn(true);
+      setLoginError("");
+    } else {
+      setLoginError("Correo o contraseña incorrectos");
+    }
+  };
+
+  const doLogout = () => {
+    localStorage.removeItem("floreria_session");
+    setLoggedIn(false);
+    setLoginUser("");
+    setLoginPass("");
+  };
+
   const [page, setPage]   = useState("dashboard");
   const [orders, setOrders] = useLocalStorage("floreria_orders", INIT_ORDERS);
   const [gastos, setGastos] = useLocalStorage("floreria_gastos", INIT_GASTOS);
@@ -603,6 +642,35 @@ export default function App() {
   const todayD = new Date();
   const isToday = (y,m,d) => d===todayD.getDate()&&m===todayD.getMonth()&&y===todayD.getFullYear();
 
+  // ── Pantalla de login ──
+  if (!loggedIn) return (
+    <>
+      <style>{FONTS}{STYLES}</style>
+      <div className="login-page">
+        <div className="login-card">
+          <div className="login-logo">🌸</div>
+          <div className="login-brand">Vaan fiori</div>
+          <div className="login-sub">Gestión de Pedidos</div>
+          {loginError && <div className="login-error">⚠️ {loginError}</div>}
+          <div className="login-group">
+            <label className="login-label">Correo electrónico</label>
+            <input type="email" className="login-input" placeholder="tu@correo.com" value={loginUser}
+              onChange={e=>setLoginUser(e.target.value)}
+              onKeyDown={e=>e.key==="Enter"&&doLogin()}/>
+          </div>
+          <div className="login-group">
+            <label className="login-label">Contraseña</label>
+            <input type="password" className="login-input" placeholder="••••••••" value={loginPass}
+              onChange={e=>setLoginPass(e.target.value)}
+              onKeyDown={e=>e.key==="Enter"&&doLogin()}/>
+          </div>
+          <button className="login-btn" onClick={doLogin}>Ingresar 🌺</button>
+          <div className="login-hint">Correo: <b>andresachinte0406@gmail.com</b> · Contraseña: <b>andres8103</b></div>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <>
       <style>{FONTS}{STYLES}</style>
@@ -613,7 +681,7 @@ export default function App() {
           <div className="header-brand" onClick={()=>setPage("dashboard")}>
             <div className="header-logo">🌸</div>
             <div>
-              <div className="header-title">Florería Élise</div>
+              <div className="header-title">Vaan fiori</div>
               <div className="header-subtitle">Gestión de Pedidos</div>
             </div>
           </div>
@@ -625,6 +693,9 @@ export default function App() {
             ))}
             <button className="btn btn-primary" style={{marginLeft:8,padding:"8px 18px",fontSize:13}} onClick={openNewOrder}>
               + Agendar
+            </button>
+            <button className="nav-btn" style={{marginLeft:4,color:"var(--rose-600)"}} onClick={doLogout} title="Cerrar sesión">
+              <span>🚪</span><span>Salir</span>
             </button>
           </nav>
         </header>
