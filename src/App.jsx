@@ -1,4 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+
+// ── Persistencia en localStorage ──
+function useLocalStorage(key, initial) {
+  const [val, setVal] = useState(() => {
+    try {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : initial;
+    } catch { return initial; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+  }, [key, val]);
+  return [val, setVal];
+}
 
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
@@ -347,8 +361,8 @@ const emptyGasto = { fecha:new Date().toISOString().split("T")[0], descripcion:"
 
 export default function App() {
   const [page, setPage] = useState("dashboard");
-  const [orders, setOrders] = useState(INIT_ORDERS);
-  const [gastos, setGastos] = useState(INIT_GASTOS);
+  const [orders, setOrders] = useLocalStorage("floreria_orders", INIT_ORDERS);
+  const [gastos, setGastos] = useLocalStorage("floreria_gastos", INIT_GASTOS);
   const [form, setForm] = useState({...emptyOrder});
   const [gastoForm, setGastoForm] = useState({...emptyGasto});
   const [editingId, setEditingId] = useState(null);
