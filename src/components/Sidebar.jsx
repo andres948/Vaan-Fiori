@@ -3,11 +3,12 @@ import Logo from './Logo'
 import { useAuth } from '../context/AuthContext'
 
 const links = [
-  { to: '/', label: 'Panel', icon: IconDashboard },
-  { to: '/pedidos', label: 'Pedidos', icon: IconOrders },
-  { to: '/costos', label: 'Costos', icon: IconCosts },
-  { to: '/finanzas', label: 'Finanzas', icon: IconFinance },
-  { to: '/configuracion', label: 'Configuración', icon: IconSettings },
+  { to: '/',             label: 'Panel',         icon: IconDashboard },
+  { to: '/pedidos',      label: 'Pedidos',        icon: IconOrders    },
+  { to: '/costos',       label: 'Costos',         icon: IconCosts     },
+  { to: '/gastos',       label: 'Gastos pers.',   icon: IconGastos    },
+  { to: '/finanzas',     label: 'Finanzas',       icon: IconFinance   },
+  { to: '/configuracion',label: 'Configuración',  icon: IconSettings  },
 ]
 
 export default function Sidebar() {
@@ -70,6 +71,14 @@ function IconCosts(props) {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" {...props}>
       <path d="M3 7.5 12 3l9 4.5-9 4.5-9-4.5Z" />
       <path d="M3 12l9 4.5 9-4.5M3 16.5 12 21l9-4.5" />
+    </svg>
+  )
+}
+function IconGastos(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 3" />
     </svg>
   )
 }

@@ -1,8 +1,3 @@
-// Datos ficticios únicamente para demostrar el funcionamiento visual de la
-// aplicación. Se guardan en memoria (o localStorage) mientras Supabase no
-// esté configurado. Bórralos cuando conectes tus datos reales: basta con
-// vaciar estos dos arreglos.
-
 export const demoPedidos = [
   {
     id: 'p1',
@@ -32,7 +27,7 @@ export const demoPedidos = [
     cliente: 'Camilo Torres',
     telefono: '3201122334',
     precio: 260000,
-    abono: 100000,
+    abono: 260000, // ya entregado → abono = precio
     fecha_pedido: '2026-08-20',
     fecha_entrega: '2026-08-28',
     estado: 'Entregado',
@@ -96,5 +91,57 @@ export const demoCostos = [
     precio: 25000,
     cantidad: 4,
     fecha: '2026-08-25',
+  },
+]
+
+// ── Gastos personales de ejemplo ──────────────────────────────
+export const demoGastosPersonales = [
+  {
+    id: 'g1',
+    descripcion: 'Almuerzo',
+    categoria: 'alimentacion',
+    valor: 15000,
+    fecha: '2026-09-02',
+    notas: '',
+  },
+  {
+    id: 'g2',
+    descripcion: 'Pasaje bus',
+    categoria: 'transporte',
+    valor: 4200,
+    fecha: '2026-09-03',
+    notas: 'Ida y vuelta al centro',
+  },
+  {
+    id: 'g3',
+    descripcion: 'Crema facial',
+    categoria: 'gustos',
+    valor: 38000,
+    fecha: '2026-09-05',
+    notas: '',
+  },
+  {
+    id: 'g4',
+    descripcion: 'Internet del mes',
+    categoria: 'servicios',
+    valor: 62000,
+    fecha: '2026-09-01',
+    notas: '',
+  },
+  {
+    id: 'g5',
+    descripcion: 'Mercado semanal',
+    categoria: 'alimentacion',
+    valor: 85000,
+    fecha: '2026-09-07',
+    notas: '',
+  },
+  {
+    id: 'g6',
+    descripcion: 'Medicamentos',
+    categoria: 'salud',
+    valor: 22000,
+    fecha: '2026-08-28',
+    notas: '',
   },
 ]
